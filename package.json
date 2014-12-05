@@ -1,0 +1,16 @@
+{
+  "name": "modal-css",
+  "version": "0.0.0",
+  "description": "Modale css",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Pierre Besson <pierre.besson7@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "gulp-handlebars": "^3.0.1",
+    "gulp-less": "^1.3.7"
+  }
+}
