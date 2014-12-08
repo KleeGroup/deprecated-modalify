@@ -1,10 +1,6 @@
-<div class="modal-css"  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <h2>{{title}}</h2>
-      <a href="#close" class="btn-close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
-    </div>
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+div(id="modalify-container",data-modal-container,class="modal-css",aria-hidden="true")
+  div.modal-dialog
+    div.modal-header
+      h2(data-modal-title)
+      a(href="#close",data-modal-close,class="btn-close",aria-hidden="true") ×
+    div(data-modal-content,class="modal-content")
