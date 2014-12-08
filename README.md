@@ -11,4 +11,6 @@ Comes with a ``modalify.js`` file and a `modalify.css` file to integrate.
 
 ## API ?
 
+## Articles
 
+[http://css-tricks.com/on-target/](http://css-tricks.com/on-target/)
