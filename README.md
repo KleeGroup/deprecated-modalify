@@ -34,6 +34,9 @@ modalify.addElement({
 });
 ```
 
+## Packages
+- `bower install --save modalify`
+
 ## Articles
 
 - [Modal css](http://codepen.io/maccadb7/pen/nbHEg)
