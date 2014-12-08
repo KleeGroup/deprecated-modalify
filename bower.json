@@ -1,0 +1,22 @@
+{
+  "name": "modalify",
+  "version": "0.0.0",
+  "homepage": "https://github.com/pierr/modalify",
+  "authors": [
+    "Pierre <pierre.besson7@gmail.com>"
+  ],
+  "description": "'A simple tool to create pure css modal. Js is only here to change the content.",
+  "main": ["dist/modalify.js", "dist/modal.css"],
+  "keywords": [
+    "modal",
+    "css"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
