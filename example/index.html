@@ -11,6 +11,14 @@
     <script>
       var modalify = modalify;
       modalify.init();
+
+      var a = document.createElement('DIV');
+      a.innerHTML = '<p>Test de la modale.</p><a href="#test">TEST</a>'
+      a.querySelector('a').addEventListener('click', function(event) {
+       // event.preventDefault();
+        console.log("Handler defined outside modalify",event.target);
+      }, false);
+      modalify.addElement({el: a, title: "Test Pierre", closeSelector: "a"});
        //Create a dom element in js.
        //var elem = document.createElement("notification-modalify");
        //document.body.insertBefore(elem,document.body.childNodes[0]);
