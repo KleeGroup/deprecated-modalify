@@ -6,7 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
-  "git": "https://github.com/pierr/modalify.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pierr/modalify.git"
+  },
   "author": "Pierre Besson <pierre.besson7@gmail.com>",
   "license": "MIT",
   "dependencies": {
