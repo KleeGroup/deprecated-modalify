@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="modal.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <script src="modalify.js"></script>
   </head>
@@ -13,12 +14,16 @@
       modalify.init();
 
       var a = document.createElement('DIV');
-      a.innerHTML = '<p>Test de la modale.</p><a href="#test">TEST</a>'
+      a.innerHTML = '<p>Test de la modale.</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><a href="#test">TEST</a>'
       a.querySelector('a').addEventListener('click', function(event) {
        // event.preventDefault();
         console.log("Handler defined outside modalify",event.target);
       }, false);
-      modalify.addElement({el: a, title: "Test Pierre", closeSelector: "a"});
+      
+      document.querySelector('a[href="#modalify-container"]').addEventListener('click', function(event){
+              modalify.addElement({el: a, title: "Test Pierre", closeSelector: "a"});
+      });
+
        //Create a dom element in js.
        //var elem = document.createElement("notification-modalify");
        //document.body.insertBefore(elem,document.body.childNodes[0]);
