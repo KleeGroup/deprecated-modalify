@@ -13,6 +13,7 @@ window.modalify.openSelector = 'a[href="#modalify-container"]';
 var templateModal = require('./templates/modal');
 var domElement = require('./util/domElement');
 var events = require('./events');
+var url;
 /**
  * Configuration file.
  * @type {object}
@@ -38,7 +39,15 @@ function init(options){
   var template = options.template || templateModal;
   var selector = options.selector || conf.selector;
   document.querySelector(selector).appendChild(domElement(template()));
-  events.hashUrl.cancelUrlChangeCssTarget();
+  var openElement = document.createElement('a');
+  openElement.href = "#modalify-container";
+  openElement.setAttribute('data-modalify-action', '');
+  document.body.insertBefore(openElement, null);
+  document.querySelector(selector).querySelector('[data-modalify-close]').addEventListener('click', function(event){
+    console.log('close modal');
+    location.hash = url;
+  });
+  //events.hashUrl.cancelUrlChangeCssTarget();
   isInit = true;
   return true;
 }
@@ -60,6 +69,9 @@ function addElement(element){
   if(closeElement === undefined ||  closeElement.tagName !== "A"){
     throw new Error("The closeElement should be a link");
   }*/
+  var openElement = document.createElement('a');
+  /*openElement.href = "#modalify-container";
+  openElement.setAttribute('data-modalify-action', '');*/
   var closeElement = document.createElement('a');
   closeElement.href = "#modalify-close";
   closeElement.setAttribute('data-modalify-action', '');
@@ -70,16 +82,28 @@ function addElement(element){
   var modalContent = document.querySelector("[data-modalify-content]");
   modalContent.innerHTML = "";
   modalContent.insertBefore(element.el, null);
-  modalContent.insertBefore(closeElement, null);
+  openModal();
+ // document.body.insertBefore(openElement, null);
   //Reregister dom events hash changing.
-  events.hashUrl.cancelUrlChangeCssTarget();
-  events.closeModal.closeModalAction(element.closeSelector);
+ // events.hashUrl.cancelUrlChangeCssTarget();
+ // events.closeModal.closeModalAction(element.closeSelector);
 
 }
 
+var openModal =  function(){
+    url = location.hash;
+    document.querySelector('a[href="#modalify-container"]').click();
+  };
+
 module.exports = {
   init: init,
-  addElement: addElement
+  addElement: addElement,
+  close: function(){
+    
+    document.querySelector('a[href="#modalify-close"]').click();
+    location.hash = url;
+  },
+  open:openModal
 };
 },{"./config.json":3,"./events":6,"./templates/modal":7,"./util/domElement":8}],3:[function(require,module,exports){
 module.exports={
@@ -140,7 +164,7 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<div id=\"modalify-container\" data-modalify-container=\"data-modalify-container\" aria-hidden=\"true\" class=\"modalify-css\"><div class=\"modalify-dialog\"><div class=\"modalify-header\"><h2 data-modalify-title=\"data-modalify-title\"></h2><a href=\"#modalify-close\" data-modalify-action=\"data-modalify-action\" data-modalify-close=\"data-modalify-close\" aria-hidden=\"true\" class=\"btn-close\">×</a></div><div data-modalify-content=\"data-modalify-content\" class=\"modalify-content\"></div></div></div>");;return buf.join("");
+buf.push("<div id=\"modalify-container\" data-modalify-container=\"data-modalify-container\" aria-hidden=\"true\" class=\"modalify-css\"><div class=\"modalify-dialog\"><div class=\"modalify-header\"><h2 data-modalify-title=\"data-modalify-title\"></h2><a href=\"javascript:modalify.close()\" data-modalify-action=\"data-modalify-action\" data-modalify-close=\"data-modalify-close\" aria-hidden=\"true\" class=\"btn-close\">×</a></div><div data-modalify-content=\"data-modalify-content\" class=\"modalify-content\"></div></div></div>");;return buf.join("");
 };
 },{}],8:[function(require,module,exports){
 /**
