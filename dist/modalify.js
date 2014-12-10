@@ -423,7 +423,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 },{"fs":9}],11:[function(require,module,exports){
 module.exports={
   "name": "modalify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Modale css",
   "main": "index.js",
   "scripts": {
