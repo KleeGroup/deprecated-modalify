@@ -14,14 +14,14 @@
       modalify.init();
 
       var a = document.createElement('DIV');
-      a.innerHTML = '<p>Test de la modale.</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><a href="#test">TEST</a>'
-      a.querySelector('a').addEventListener('click', function(event) {
+      a.innerHTML = '<p>Test de la modale.</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><button class="close1">Close1</button><button class="close2">Close2</button>'
+      a.querySelector('button.close1').addEventListener('click', function(event) {
        // event.preventDefault();
         console.log("Handler defined outside modalify",event.target);
       }, false);
       
       document.querySelector('a[href="#modalify-container"]').addEventListener('click', function(event){
-              modalify.addElement({el: a, title: "Test Pierre", closeSelector: "a"});
+              modalify.addElement({el: a, title: "Test Pierre", closeSelector: "button.close1,button.close2"});
       });
 
        //Create a dom element in js.
