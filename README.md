@@ -20,7 +20,7 @@ modal template
 ```javascript
 //init examples
 modalify.init();
-modalify.init({template: myModalTemplate, selectod: "div#my-super-selector"});
+modalify.init({template: myModalTemplate, selector: "div#my-super-selector"});
 ```
 - The close action must have an attribute which is `[data-modalify-action]`
 
@@ -32,6 +32,12 @@ modalify.addElement({
   closeSelector:'a',
   el: myView.el
 });
+```
+- The `addElement` method should be called when a user action triggers a modal opening. The user action triggering a modal opening must be a link with a targer equals to #modalify-container.
+```javascript
+document.querySelector('a[href="#modalify-container"]').addEventListener('click', function(event){
+              modalify.addElement({el: a, title: "Test Pierre", closeSelector: "a"});
+      });
 ```
 
 ## Packages
