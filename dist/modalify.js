@@ -2,7 +2,10 @@
 window.jade = require('jade/runtime');
 window.modalify=require('./component');
 window.modalify.version = require('../package.json').version;
-},{"../package.json":10,"./component":2,"jade/runtime":9}],2:[function(require,module,exports){
+window.modalify.openSelector = 'a[href="#modalify-container"]';
+//Minimal selector to trigger modal opening.
+
+},{"../package.json":11,"./component":2,"jade/runtime":10}],2:[function(require,module,exports){
 /**
  * Modal template.
  * @type {function}
@@ -50,21 +53,27 @@ function addElement(element){
   if(!element.closeSelector){
     throw new Error("There should be a  close Selector");
   }
-  var closeElement = element.el.querySelector(element.closeSelector);
-  if(closeElement.tagName !== "A"){
+
+  
+
+  /*var closeElement = element.el.querySelector(element.closeSelector);
+  if(closeElement === undefined ||  closeElement.tagName !== "A"){
     throw new Error("The closeElement should be a link");
-  }
+  }*/
+  var closeElement = document.createElement('a');
   closeElement.href = "#modalify-close";
   closeElement.setAttribute('data-modalify-action', '');
   if(!isInit){init();}
   if(element.title){
-    document.querySelector("[data-modal-title]").innerHTML = element.title || '';
+    document.querySelector("[data-modalify-title]").innerHTML = element.title || '';
   }
-  var modalContent = document.querySelector("[data-modal-content]");
+  var modalContent = document.querySelector("[data-modalify-content]");
   modalContent.innerHTML = "";
   modalContent.insertBefore(element.el, null);
+  modalContent.insertBefore(closeElement, null);
   //Reregister dom events hash changing.
   events.hashUrl.cancelUrlChangeCssTarget();
+  events.closeModal.closeModalAction(element.closeSelector);
 
 }
 
@@ -72,11 +81,27 @@ module.exports = {
   init: init,
   addElement: addElement
 };
-},{"./config.json":3,"./events":5,"./templates/modal":6,"./util/domElement":7}],3:[function(require,module,exports){
+},{"./config.json":3,"./events":6,"./templates/modal":7,"./util/domElement":8}],3:[function(require,module,exports){
 module.exports={
   "selector": "body"
 }
 },{}],4:[function(require,module,exports){
+function closeModalAction(selector) {
+  selector = selector || "[data-modalify-action]";
+  var actionButtons = document.querySelectorAll(selector);
+  [].forEach.call(actionButtons, function(btn) {
+    btn.addEventListener('click', closeModalEventHandler, false);
+  });
+}
+
+function closeModalEventHandler(event){
+  document.querySelector("#modalify-container a[href='#modalify-close']").click();
+}
+
+module.exports = {
+  closeModalAction: closeModalAction
+};
+},{}],5:[function(require,module,exports){
 function cancelUrlChangeCssTarget(selector) {
   selector = selector || "a[data-modalify-action]";
   var actionButtons = document.querySelectorAll(selector);
@@ -104,19 +129,20 @@ function cancelUrlTargetEvent(e) {
 module.exports = {
   cancelUrlChangeCssTarget: cancelUrlChangeCssTarget
 };
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = {
-  hashUrl : require('./hashUrl')
+  hashUrl : require('./hashUrl'),
+  closeModal: require('./closeModal')
 };
-},{"./hashUrl":4}],6:[function(require,module,exports){
+},{"./closeModal":4,"./hashUrl":5}],7:[function(require,module,exports){
 module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<div id=\"modalify-container\" data-modalify-container=\"data-modalify-container\" aria-hidden=\"true\" class=\"modal-css\"><div class=\"modal-dialog\"><div class=\"modal-header\"><h2 data-modal-title=\"data-modal-title\"></h2><a href=\"#modalify-close\" data-modalify-action=\"data-modalify-action\" data-modalify-close=\"data-modalify-close\" aria-hidden=\"true\" class=\"btn-close\">×</a></div><div data-modal-content=\"data-modal-content\" class=\"modal-content\"></div></div></div>");;return buf.join("");
+buf.push("<div id=\"modalify-container\" data-modalify-container=\"data-modalify-container\" aria-hidden=\"true\" class=\"modalify-css\"><div class=\"modalify-dialog\"><div class=\"modalify-header\"><h2 data-modalify-title=\"data-modalify-title\"></h2><a href=\"#modalify-close\" data-modalify-action=\"data-modalify-action\" data-modalify-close=\"data-modalify-close\" aria-hidden=\"true\" class=\"btn-close\">×</a></div><div data-modalify-content=\"data-modalify-content\" class=\"modalify-content\"></div></div></div>");;return buf.join("");
 };
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * Creates a DOM element when giving valid HTML.
  * Will not work with invalid standalone HTML.
@@ -127,9 +153,9 @@ module.exports = function(html) {
     el.innerHTML = html;
     return el.childNodes[0];
 };
-},{}],8:[function(require,module,exports){
-
 },{}],9:[function(require,module,exports){
+
+},{}],10:[function(require,module,exports){
 (function (global){
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
@@ -370,7 +396,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 },{}]},{},[1])(1)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"fs":8}],10:[function(require,module,exports){
+},{"fs":9}],11:[function(require,module,exports){
 module.exports={
   "name": "modalify",
   "version": "0.0.1",

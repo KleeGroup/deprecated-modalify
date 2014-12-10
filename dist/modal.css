@@ -68,7 +68,10 @@ p{
 .btn-close:hover {
   color: #919191;
 }
-.modal-css:before {
+.modalify-css {
+  with: 100%;
+}
+.modalify-css:before {
   content: "";
   display: none;
   background: rgba(0, 0, 0, 0.6);
@@ -79,25 +82,25 @@ p{
   bottom: 0;
   z-index: 10;
 }
-.modal-css:target:before {
+.modalify-css:target:before {
   display: block;
 }
-.modal-css:target .modal-dialog {
+.modalify-css:target .modalify-dialog {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
   top: 20%;
 }
-.modal-dialog {
+.modalify-dialog {
   background: #fefefe;
   border: #333333 solid 1px;
   border-radius: 5px;
-  margin-left: -200px;
-  position: fixed;
-  left: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 70%;
   top: -100%;
   z-index: 11;
-  width: 500px;
   -webkit-transform: translate(0, -500%);
   -ms-transform: translate(0, -500%);
   transform: translate(0, -500%);
@@ -106,21 +109,21 @@ p{
   -o-transition: -o-transform 0.3s ease-out;
   transition: transform 0.3s ease-out;
 }
-.modal-content {
+.modalify-content {
   padding: 20px;
 }
-.modal-header,
-.modal-footer {
+.modalify-header,
+.modalify-footer {
   padding: 10px 20px;
 }
-.modal-header {
+.modalify-header {
   border-bottom: #eeeeee solid 1px;
 }
-.modal-header h2 {
+.modalify-header h2 {
   font-size: 20px;
 }
 /*
-.modal-footer{
+.modalify-footer{
   border-top: @gray-lighter solid 1px;
   text-align: right;
 }
