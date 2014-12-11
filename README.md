@@ -22,23 +22,22 @@ modal template
 modalify.init();
 modalify.init({template: myModalTemplate, selector: "div#my-super-selector"});
 ```
-- The close action must have an attribute which is `[data-modalify-action]`
 
-- `modalify.addElement`, takes three arguments: **title**: the modal title, by default it is `""`, **closeSelector** a css selector on the close element in order to add the good target, you can add multiple close with a comma selector: `button.close1,button.close2`, **el** the domElement to inject into the modal container. If you are working with Backbone, the `el` is your `view.el`.
+- `modalify.addElement`, takes three arguments: **title**: the modal title, by default it is `"", **el** the domElement to inject into the modal container. If you are working with Backbone, the `el` is your `view.el`.
 
 ```javascript
 modalify.addElement({
   title: i18n.t('myModalTitle'),
-  closeSelector:'a',
   el: myView.el
 });
 ```
 - The `addElement` method should be called when a user action triggers a modal opening. The user action triggering a modal opening must be a link with a targer equals to #modalify-container.
 ```javascript
 document.querySelector('a[href="#modalify-container"]').addEventListener('click', function(event){
-              modalify.addElement({el: a, title: "Test Pierre", closeSelector: "button.close1,button.close2"});
+              modalify.addElement({el: a, title: "Test Pierre"});
       });
 ```
+- On the close action of the modal, which you have to implement in your page, you have to call `modalify.close()` it will close the modal and restore the url of the page before the modal opening.
 
 ## Packages
 - `bower install --save modalify`
