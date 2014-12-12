@@ -37,7 +37,7 @@ function init(options) {
       return false;
     }
     var template = options.template || templateModal;
-    var selector = options.selector || conf.selector;
+    var selector = options.selector !== undefined ? options.selector : conf.selector;
     document.querySelector(selector).appendChild(domElement(template()));
     var openElement = document.createElement('a');
     openElement.href = "#modalify-container";
@@ -59,9 +59,9 @@ function addElement(element) {
   if (!element.el) {
     throw new Error("There should be an el DOM element.");
   }
-  if (!element.closeSelector) {
+  /*if (!element.closeSelector) {
     throw new Error("There should be a  close Selector");
-  }
+  }*/
 
 
 
@@ -93,6 +93,7 @@ function addElement(element) {
 }
 
 var openModal = function() {
+  document.querySelector('[data-modalify-container]').classList.remove('hidden');
   url = location.hash;
   document.querySelector('a[href="#modalify-container"]').click();
 };
@@ -102,7 +103,11 @@ module.exports = {
   addElement: addElement,
   close: function() {
     document.querySelector('a[data-modalify-close]').click();
-    if (Backbone) {
+    document.querySelector('[data-modalify-container]').classList.add('hidden');
+    var modalContent = document.querySelector("[data-modalify-content]");
+    modalContent.innerHTML = "";
+    
+    if (window && window.Backbone !== undefined) {
       Backbone.history.navigate(url);
     } else {
       location.hash = url;
