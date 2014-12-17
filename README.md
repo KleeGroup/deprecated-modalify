@@ -23,7 +23,7 @@ modalify.init();
 modalify.init({template: myModalTemplate, selector: "div#my-super-selector"});
 ```
 
-- `modalify.addElement`, takes three arguments: **title**: the modal title, by default it is `"", **el** the domElement to inject into the modal container. If you are working with Backbone, the `el` is your `view.el`., the type allows you to define the width of the modal. Types are defined in `config.json`: `extra-small`, `small`, `medium`, `large`.[large by default]
+- `modalify.addElement`, takes three arguments: **title**: the modal title, by default it is "", **el** the domElement to inject into the modal container. If you are working with Backbone, the `el` is your `view.el`., the type allows you to define the width of the modal. Types are defined in `config.json`: `extra-small`, `small`, `medium`, `large`.[large by default]
 
 ```javascript
 modalify.addElement({
