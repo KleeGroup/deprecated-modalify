@@ -38,11 +38,12 @@ function init(options) {
     }
     var template = options.template || templateModal;
     var selector = options.selector !== undefined ? options.selector : conf.selector;
-    document.querySelector(selector).appendChild(domElement(template()));
+    //document.querySelector(selector).appendChild(domElement(template()));
+    document.body.insertBefore(domElement(template()), document.body.firstChild);
     var openElement = document.createElement('a');
     openElement.href = "#modalify-container";
     openElement.setAttribute('data-modalify-action', '');
-    document.body.insertBefore(openElement, null);
+    document.body.insertBefore(openElement, document.body.firstChild);
     document.querySelector(selector).querySelector('[data-modalify-close]').addEventListener('click', function(event) {
       console.log('close modal');
       location.hash = url;
@@ -92,16 +93,13 @@ function addElement(element) {
 
 }
 
-var openModal = function() {
+var openModal = function openModal() {
   document.querySelector('[data-modalify-container]').classList.remove('hidden');
   url = location.hash;
   document.querySelector('a[href="#modalify-container"]').click();
 };
 
-module.exports = {
-  init: init,
-  addElement: addElement,
-  close: function() {
+var closeModal = function closeModal() {
     document.querySelector('a[data-modalify-close]').click();
     document.querySelector('[data-modalify-container]').classList.add('hidden');
     var modalContent = document.querySelector("[data-modalify-content]");
@@ -113,7 +111,12 @@ module.exports = {
       location.hash = url;
     }
 
-  },
+  }
+
+module.exports = {
+  init: init,
+  addElement: addElement,
+  close: closeModal,
   open: openModal
 };
 },{"./config.json":3,"./events":6,"./templates/modal":7,"./util/domElement":8}],3:[function(require,module,exports){
