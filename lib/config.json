@@ -1,3 +1,9 @@
 {
-  "selector": "body"
+  "selector": "body",
+  "type": {
+    "extra-small": "modalify-dialog-xs",
+    "small": "modalify-dialog-sm",
+    "medium": "modalify-dialog-md",
+    "large": "modalify-dialog-lg"
+  }
 }
