@@ -18,7 +18,7 @@ var url;
  * Configuration file.
  * @type {object}
  */
-var conf = require('./config.json');
+var config = require('./config.json');
 
 /**
  * Indicate if the modal container has been initialized.
@@ -37,13 +37,14 @@ function init(options) {
       return false;
     }
     var template = options.template || templateModal;
-    var selector = options.selector !== undefined ? options.selector : conf.selector;
+    var selector = options.selector !== undefined ? options.selector : config.selector;
     //document.querySelector(selector).appendChild(domElement(template()));
     document.body.insertBefore(domElement(template()), document.body.firstChild);
     var openElement = document.createElement('a');
     openElement.href = "#modalify-container";
     openElement.setAttribute('data-modalify-action', '');
     document.body.insertBefore(openElement, document.body.firstChild);
+    console.log('addEventListener');
     document.querySelector(selector).querySelector('[data-modalify-close]').addEventListener('click', function(event) {
       console.log('close modal');
       location.hash = url;
@@ -60,6 +61,8 @@ function addElement(element) {
   if (!element.el) {
     throw new Error("There should be an el DOM element.");
   }
+  element.type || (element.type =  'large');
+  document.querySelector("div.modalify-dialog").classList.add(config.type[element.type]);
   /*if (!element.closeSelector) {
     throw new Error("There should be a  close Selector");
   }*/
@@ -100,8 +103,12 @@ var openModal = function openModal() {
 };
 
 var closeModal = function closeModal() {
+  console.log('closeModalHandler');
     document.querySelector('a[data-modalify-close]').click();
     document.querySelector('[data-modalify-container]').classList.add('hidden');
+    for(var type in config.type){
+          document.querySelector("div.modalify-dialog").classList.remove(config.type[type]);      
+    }
     var modalContent = document.querySelector("[data-modalify-content]");
     modalContent.innerHTML = "";
     
@@ -110,8 +117,7 @@ var closeModal = function closeModal() {
     } else {
       location.hash = url;
     }
-
-  }
+};
 
 module.exports = {
   init: init,
@@ -121,7 +127,13 @@ module.exports = {
 };
 },{"./config.json":3,"./events":6,"./templates/modal":7,"./util/domElement":8}],3:[function(require,module,exports){
 module.exports={
-  "selector": "body"
+  "selector": "body",
+  "type": {
+    "extra-small": "modalify-dialog-xs",
+    "small": "modalify-dialog-sm",
+    "medium": "modalify-dialog-md",
+    "large": "modalify-dialog-lg"
+  }
 }
 },{}],4:[function(require,module,exports){
 function closeModalAction(selector) {
