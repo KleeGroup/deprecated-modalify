@@ -15,7 +15,7 @@ gulp.task('templates', function() {
     .pipe(gulp.dest('./lib/templates/'));
 });
 
-gulp.task('browserify', ['templates'], function() {
+gulp.task('browserify', function() {
   var browserify = require('browserify');
   var source = require('vinyl-source-stream');
   return browserify('./lib/index.js')
@@ -45,7 +45,7 @@ gulp.task('style', function() {
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 // Watch Files For Changes & Reload
-gulp.task('serve', ['browserify', 'style'], function() {
+gulp.task('serve', ['templates','browserify', 'style'], function() {
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
@@ -57,13 +57,14 @@ gulp.task('serve', ['browserify', 'style'], function() {
     }
   });
 
-  gulp.watch(['lib/**/*.js'], ['browserify', reload]);
-  gulp.watch(['lib/templates/*.jade'], ['templates', reload]);
-  gulp.watch(['lib/styles/*.{less,css}'], ['style', reload]);
-  gulp.watch(['lib/*.json'], ['browserify', reload]);
+//  gulp.watch(['lib/**/*.js'], ['browserify', reload]);
+//  gulp.watch(['lib/templates/*.jade'], ['templates', reload]);
+//  gulp.watch(['lib/styles/*.{less,css}'], ['style', reload]);
+//  gulp.watch(['lib/*.json'], ['browserify', reload]);
+
   //gulp.watch(['app/scripts/**/*.js'], jshint);
   //gulp.watch(['app/images/**/*'], reload);
 });
 
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['browserify', 'style']);
+gulp.task('default', ['templates', 'browserify', 'style']);
