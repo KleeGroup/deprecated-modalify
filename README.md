@@ -18,7 +18,7 @@ It takes two options: **selector**, where to render the modal container (default
 modal template
 
 ```javascript
-//init examples
+//init examples 
 modalify.init();
 modalify.init({template: myModalTemplate, selector: "div#my-super-selector"});
 ```
